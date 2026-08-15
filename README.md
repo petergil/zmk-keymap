@@ -51,10 +51,15 @@ that imports this repo's manifest:
 ```yaml
 projects:
   - name: petergil-zmk-keymap
-    url: file:///home/petergil/programming/zaphod/petergil-zmk-keymap  # or a real git URL once pushed
+    url: git@github.com:petergil/zmk-keymap.git
     revision: main
     import: west.yml
 ```
+
+Note: the `name:` field controls the local checkout directory name (and thus
+the relative include paths below), independent of the GitHub repo name
+(`zmk-keymap`). Keep it as `petergil-zmk-keymap` unless you also update the
+`../petergil-zmk-keymap/...` includes throughout this repo and consumers.
 
 In the board/shield's `.keymap` file, include in this order:
 
@@ -89,8 +94,6 @@ CONFIG_ZMK_POINTING=y
   Peter and not really "generic" — they're included here for now but are
   candidates for splitting out once it's confirmed how a consumer should
   selectively opt in/out of extras like this.
-- Not yet published to a real git remote; the `file://` URL above only works
-  on this machine.
 - Not build-tested with `west` (unavailable in the environment this was
   written in) — verify with an actual `west update && west build` before
   relying on it.
