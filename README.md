@@ -51,10 +51,14 @@ that imports this repo's manifest:
 ```yaml
 projects:
   - name: petergil-zmk-keymap
-    url: git@github.com:petergil/zmk-keymap.git
+    url: https://github.com/petergil/zmk-keymap
     revision: main
     import: west.yml
 ```
+
+Use `https://`, not `git@github.com:...` — ZMK builds typically run in CI (e.g.
+GitHub Actions) without your personal SSH key, so an SSH URL will fail to
+clone there.
 
 Note: the `name:` field controls the local checkout directory name (and thus
 the relative include paths below), independent of the GitHub repo name
