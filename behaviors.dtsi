@@ -1,0 +1,24 @@
+/*
+ * Shared behaviors for petergil's split keyboard keymaps.
+ *
+ * Prerequisite include: <behaviors.dtsi> (ZMK core).
+ */
+
+// Using layer taps on thumbs; quick-tap makes tap-then-hold repeat the tap key
+// instead of re-triggering the layer, which helps with repeating space/backspace.
+&lt { quick-tap-ms = <200>; };
+
+/ {
+    behaviors {
+        hm: homerow_mods {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HOMEROW_MODS";
+            #binding-cells = <2>;
+            tapping_term_ms = <200>;
+            flavor = "tap-preferred";
+            bindings = <&kp>, <&kp>;
+            // a quick tap+hold holds the tap key
+            quick-tap-ms = <200>;
+        };
+    };
+};

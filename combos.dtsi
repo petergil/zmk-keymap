@@ -1,0 +1,31 @@
+/*
+ * Thumb-cluster combos for MED_L / FUN_L access.
+ *
+ * Prerequisites (include before this file):
+ *   - "layers.h" from this repo (defines MED_L, FUN_L)
+ *   - zmk-nodefree-config's keypos_def/keypos_34keys.h (defines LH0/LH1/RH0/RH1)
+ *
+ * Assumption: the target board's keymap `bindings` list follows the
+ * conventional 34-key ordering documented in keypos_34keys.h (5 columns x 3
+ * rows per side, then 4 thumb keys ordered LH1 LH0 RH0 RH1). If a board's
+ * physical thumb ordering differs, these combos will silently bind to the
+ * wrong physical keys rather than fail to compile.
+ */
+
+/ {
+    combos {
+        compatible = "zmk,combos";
+
+        med_mo {
+            timeout-ms = <50>;
+            key-positions = <LH1 LH0>;
+            bindings = <&mo MED_L>;
+        };
+
+        fn_mo {
+            timeout-ms = <50>;
+            key-positions = <RH0 RH1>;
+            bindings = <&mo FUN_L>;
+        };
+    };
+};

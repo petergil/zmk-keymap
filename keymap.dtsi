@@ -1,0 +1,97 @@
+/*
+ * Generic 34-key split keyboard keymap layers (Base/Nav/Other/Num/Sym/Media/Fun).
+ *
+ * Assumes the target board's `bindings` list follows the conventional 34-key
+ * ordering: 5 columns x 3 rows per side, then 4 thumb keys, as documented in
+ * zmk-nodefree-config's keypos_def/keypos_34keys.h.
+ *
+ * Prerequisites (include before this file):
+ *   - "layers.h" from this repo
+ *   - "behaviors.dtsi" from this repo (provides &hm)
+ *   - "chars.dtsi" from this repo (provides &euro_sign, &checkmark, &cross)
+ *   - zmk-nodefree-config's international_chars/swedish.dtsi (provides
+ *     &sv_ao, &sv_oe, &sv_ae)
+ *   - <dt-bindings/zmk/pointing.h>, plus CONFIG_ZMK_POINTING=y in the
+ *     board/shield .conf (provides &mmv, &mkp, &msc)
+ */
+
+/ {
+    keymap {
+        compatible = "zmk,keymap";
+
+        /* RC(0,0) RC(0,1) RC(0,2) RC(0,3) RC(0,4)   RC(0,5) RC(0,6) RC(0,7) RC(0,8) RC(0,9) */
+        /* RC(1,0) RC(1,1) RC(1,2) RC(1,3) RC(1,4)   RC(1,5) RC(1,6) RC(1,7) RC(1,8) RC(1,9) */
+        /* RC(2,0) RC(2,1) RC(2,2) RC(2,3) RC(2,4)   RC(2,5) RC(2,6) RC(2,7) RC(2,8) RC(2,9) */
+        /*                        RC(3,3)  RC(3,4)   RC(3,5) RC(3,6) */
+
+        default_layer {
+            label = "Base";
+            bindings = <
+                &kp Q      &kp W      &kp E       &kp R          &kp T         &kp Y            &kp U          &kp I       &kp O      &kp P
+                &hm LGUI A &hm LALT S &hm LCTRL D &hm LSHFT F    &kp G         &kp H            &hm RSHFT J    &hm RCTRL K &hm LALT L &hm LGUI QUOT
+                &kp Z      &kp X      &kp C       &kp V          &kp B         &kp N            &kp M          &kp COMMA   &kp DOT    &kp FSLH
+                                                  &lt NAV_L TAB  &lt OTH_L RET &lt NUM_L SPACE  &lt SYM_L BKSP
+            >;
+        };
+
+        nav_layer {
+            label = "Nav";
+            bindings = <
+                &trans     &trans     &trans      &trans          &trans       &kp HOME       &kp PG_DN      &kp PG_UP    &kp END         &trans
+                &trans     &trans     &trans      &trans          &trans       &kp LARW       &kp DARW       &kp UARW     &kp RARW        &kp SEMI
+                &trans     &trans     &trans      &trans          &trans       &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_UP &mmv MOVE_RIGHT &mkp MCLK
+                                                  &trans          &trans       &mkp LCLK      &mkp RCLK
+            >;
+        };
+
+        other_layer {
+            label = "Other";
+            bindings = <
+                &kp LPAR   &msc SCRL_DOWN &euro_sign  &msc SCRL_UP    &kp RPAR     &trans           &trans        &trans       &trans     &sv_ao
+                &trans     &trans         &trans      &trans          &trans       &trans           &trans        &trans       &sv_oe     &sv_ae
+                &trans     &trans         &trans      &trans          &trans       &checkmark       &cross        &trans       &trans     &trans
+                                                      &trans          &trans       &kp ESC          &kp DEL
+            >;
+        };
+
+        num_layer {
+            label = "Num";
+            bindings = <
+                &kp LBKT   &kp N7     &kp N8      &kp N9          &kp RBKT      &trans          &trans         &trans      &trans     &trans
+                &kp SEMI   &kp N4     &kp N5      &kp N6          &kp EQUAL     &trans          &trans         &trans      &trans     &trans
+                &kp GRAVE  &kp N1     &kp N2      &kp N3          &kp BSLH      &trans          &trans         &trans      &trans     &trans
+                                                  &kp N0          &kp MINUS     &trans          &trans
+            >;
+        };
+
+        sym_layer {
+            label = "Sym";
+            bindings = <
+                &kp LBRC     &kp LS(N7)  &kp LS(N8)  &kp LS(N9) &kp RBRC        &trans &trans   &trans    &trans    &trans
+                &kp COLON    &kp LS(N4)  &kp LS(N5)  &kp LS(N6) &kp PLUS        &trans &trans   &trans    &trans    &trans
+                &kp TILDE    &kp LS(N1)  &kp LS(N2)  &kp LS(N3) &kp LS(BSLH)    &trans &trans   &trans    &trans    &trans
+                                                     &kp LS(N0) &kp UNDER       &trans &trans
+            >;
+        };
+
+        media_layer {
+            label = "Media";
+            bindings = <
+                &trans	   &trans     &trans      &trans          &trans       &trans           &trans         &trans       &trans       &trans
+                &trans     &trans     &trans      &trans          &trans       &trans           &trans         &trans       &trans       &trans
+                &trans     &trans     &trans      &trans          &trans       &trans           &kp C_PREV     &kp C_VOL_DN &kp C_VOL_UP &kp C_NEXT
+                                                  &trans          &trans       &kp C_STOP       &kp C_PLAY_PAUSE
+            >;
+        };
+
+        fun_layer {
+            label = "Fun";
+            bindings = <
+                &kp F12     &kp F7     &kp F8      &kp F9     &kp PSCRN         &trans          &bt BT_CLR     &trans       &trans       &trans
+                &kp F11     &kp F4     &kp F5      &kp F6     &kp SLCK          &trans          &trans         &trans       &trans       &trans
+                &kp F10     &kp F1     &kp F2      &kp F3     &kp PAUSE_BREAK   &bt BT_SEL 0    &bt BT_SEL 1   &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4
+                                                   &none      &none             &trans          &trans
+            >;
+        };
+    };
+};
