@@ -1,19 +1,26 @@
 /*
- * Generic 34-key split keyboard keymap layers (Base/Nav/Other/Num/Sym/Media/Fun).
+ * Generic 34-key split keyboard keymap: layers (Base/Nav/Other/Num/Sym/Media/
+ * Fun), home-row mods, thumb combos, and custom Unicode chars, bundled into a
+ * single include.
  *
  * Assumes the target board's `bindings` list follows the conventional 34-key
  * ordering: 5 columns x 3 rows per side, then 4 thumb keys, as documented in
- * zmk-nodefree-config's keypos_def/keypos_34keys.h.
+ * zmk-helpers' key-labels/34.h.
  *
- * Prerequisites (include before this file):
- *   - "layers.h" from this repo
- *   - "behaviors.dtsi" from this repo (provides &hm)
- *   - "chars.dtsi" from this repo (provides &euro_sign, &checkmark, &cross)
- *   - zmk-nodefree-config's international_chars/swedish.dtsi (provides
- *     &sv_ao, &sv_oe, &sv_ae)
+ * Prerequisites (include before this file, at the top of the board's
+ * .keymap, in the usual ZMK order):
+ *   - <behaviors.dtsi>, <dt-bindings/zmk/keys.h>, <dt-bindings/zmk/bt.h>
  *   - <dt-bindings/zmk/pointing.h>, plus CONFIG_ZMK_POINTING=y in the
  *     board/shield .conf (provides &mmv, &mkp, &msc)
+ *   - `#define HOST_OS <n>` (see zmk-helpers' README for values)
+ *
+ * Everything else, including zmk-helpers itself, is pulled in automatically.
  */
+
+#include "petergil-zmk-keymap/layers.h"
+#include "petergil-zmk-keymap/behaviors.dtsi"
+#include "petergil-zmk-keymap/chars.dtsi"
+#include "petergil-zmk-keymap/combos.dtsi"
 
 / {
     keymap {

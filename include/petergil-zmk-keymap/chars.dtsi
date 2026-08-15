@@ -1,13 +1,14 @@
 /*
- * Custom Unicode characters used across petergil's keymaps.
+ * Custom Unicode characters used across petergil's keymaps, including the
+ * Swedish letters (&sv_ae, &sv_ao, &sv_oe).
  *
- * Prerequisites (include before this file):
- *   - `#define HOST_OS <n>` (see zmk-nodefree-config's README for values)
- *   - zmk-nodefree-config's helper.h (provides ZMK_UNICODE_SINGLE)
- *
- * For Swedish letters (sv_ae/sv_ao/sv_oe), separately include
- * zmk-nodefree-config's international_chars/swedish.dtsi.
+ * Prerequisite (before this file): `#define HOST_OS <n>` — see
+ * https://github.com/urob/zmk-helpers#zmk_unicode for values. Everything else
+ * (zmk-helpers itself) is pulled in automatically.
  */
+
+#include "zmk-helpers/helper.h"
+#include "zmk-helpers/unicode-chars/swedish.dtsi"
 
 ZMK_UNICODE_SINGLE(euro_sign, N2, N0, A, C) // €
 

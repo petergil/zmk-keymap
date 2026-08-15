@@ -1,0 +1,4 @@
+name: petergil-zmk-keymap
+build:
+  settings:
+    dts_root: .
