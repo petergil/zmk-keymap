@@ -1,14 +1,15 @@
 /*
  * Thumb-cluster combos for MED_L / FUN_L access.
  *
- * Assumption: the target board's keymap `bindings` list follows the
- * conventional 34-key ordering documented in zmk-helpers' key-labels/34.h (5
- * columns x 3 rows per side, then 4 thumb keys ordered LH1 LH0 RH0 RH1). If a
- * board's physical thumb ordering differs, these combos will silently bind to
- * the wrong physical keys rather than fail to compile.
+ * Key positions (PG_THUMB_*) come from the selected layout header (see
+ * layout.h), the same one keymap.dtsi's PG_LAYOUT uses, so they match the
+ * bindings order.
+ * If you include this file standalone with your own bindings, select the
+ * layout header that matches those bindings, or these combos will silently
+ * bind to the wrong physical keys rather than fail to compile.
  */
 
-#include "zmk-helpers/key-labels/34.h"
+#include "petergil-zmk-keymap/layout.h"
 #include "petergil-zmk-keymap/layers.h"
 
 / {
@@ -17,13 +18,13 @@
 
         med_mo {
             timeout-ms = <50>;
-            key-positions = <LH1 LH0>;
+            key-positions = <PG_THUMB_L_OUTER PG_THUMB_L_INNER>;
             bindings = <&mo MED_L>;
         };
 
         fn_mo {
             timeout-ms = <50>;
-            key-positions = <RH0 RH1>;
+            key-positions = <PG_THUMB_R_INNER PG_THUMB_R_OUTER>;
             bindings = <&mo FUN_L>;
         };
     };

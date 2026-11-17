@@ -18,16 +18,27 @@ Provides, via a single `#include "petergil-zmk-keymap/keymap.dtsi"`:
 Individual pieces (`layers.h`, `behaviors.dtsi`, `chars.dtsi`, `combos.dtsi`)
 can also be included standalone if you only want part of this.
 
-## Layout assumption
+## Layouts
 
-Everything here assumes the consuming board's keymap `bindings` list uses the
-conventional 34-key ordering documented in
-[zmk-helpers](https://github.com/urob/zmk-helpers)'
-`include/zmk-helpers/key-labels/34.h`: 5 columns x 3 rows per side, then 4
-thumb keys ordered `LH1 LH0 RH0 RH1`. Both `zaphod` and `cradio` follow this.
-If a board's thumb ordering or key count differs, the combos in `combos.dtsi`
-will **silently** bind to the wrong physical keys rather than fail to build —
-verify against that board's actual bindings order before reusing this module.
+The keymap is written as 34 logical keys per layer (5 columns x 3 rows per
+side, then thumbs `LH1 LH0 RH0 RH1`), passed to a `PG_LAYOUT(...)` macro that
+expands them into the board's physical `bindings` order. A layout header
+provides both that macro and the matching
+[zmk-helpers](https://github.com/urob/zmk-helpers) key-labels header, so the
+combos in `combos.dtsi` always use positions that match the bindings.
+
+| Header | Boards | Notes |
+|---|---|---|
+| `layouts/34.h` (default) | cradio, zaphod, other 34-key splits | identity mapping |
+| `layouts/kyria.h` | Kyria rev1–rev3 (50-key) | inner 5 columns + middle two of the five thumbs per side; all other keys `&none` |
+
+To use a non-default layout, include it before `keymap.dtsi` (see Usage).
+Adding a board means writing a new `layouts/<board>.h`; see `layout.h` for
+what it must define.
+
+If the layout header doesn't match the board (e.g. a 50-key board with the
+default 34-key layout), keys and combos will **silently** land on the wrong
+positions rather than fail to build.
 
 ## Dependency: zmk-helpers
 
@@ -72,6 +83,7 @@ In the board/shield's `.keymap` file:
 #include <dt-bindings/zmk/pointing.h>
 
 #define HOST_OS 1  // see zmk-helpers' README for values
+// #include "petergil-zmk-keymap/layouts/kyria.h"  // only for non-34-key boards
 #include "petergil-zmk-keymap/keymap.dtsi"
 ```
 
